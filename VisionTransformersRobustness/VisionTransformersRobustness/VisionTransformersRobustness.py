@@ -13,13 +13,13 @@ def main():
     #DefaultMethods.RaySAttackShuffleDefense()
 
     #Uncomment next line to do the Adaptive attack on the Vision Transformer, ViT-L-16
-    #DefaultMethods.AdaptiveAttackVisionTransformer()
+    DefaultMethods.AdaptiveAttackVisionTransformer()
 
     #Uncomment next line to do the Adaptive attack on the Shuffle Defense (ViT-L-16 and BiT-M-R101x3)
     #DefaultMethods.AdaptiveAttackShuffleDefense()
 
     #Uncomment next line to do the self-attention gradient on the Shuffle Defense
-    DefaultMethods.SelfAttentionGradientAttackCIFAR10()
+    #DefaultMethods.SelfAttentionGradientAttackCIFAR10()
 
 if __name__ == "__main__":
     main()

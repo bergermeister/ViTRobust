@@ -11,8 +11,19 @@ from TransformerModels import VisionTransformer, CONFIGS
 import BigTransferModels
 from collections import OrderedDict
 
+from Model.MetaCNN import MetaCNN
+
 #Load the ViT-L-16 and CIFAR-10 dataset 
 def LoadViTLAndCIFAR10():
+    class Arguments( ):
+        def __init__( self ):
+            self.cuda   = "True"
+            self.cnn    = "E:\Projects\CPSC-597\AdversarialDetection\State\cifar10cnn.model"
+            self.recon  = "E:\Projects\CPSC-597\AdversarialDetection\State\cifar10recon.model"
+            self.detect = "E:\Projects\CPSC-597\AdversarialDetection\State\cifar10detect.model"
+    args = Arguments( )
+    metaCNN = MetaCNN( 3, args )
+
     #Basic variable and data setup
     device = torch.device("cuda")
     numClasses = 10
@@ -22,11 +33,13 @@ def LoadViTLAndCIFAR10():
     valLoader = DMP.GetCIFAR10Validation(imgSize, batchSize)
     #Load ViT-L-16
     config = CONFIGS["ViT-L_16"]
-    model = VisionTransformer(config, imgSize, zero_head=True, num_classes=numClasses)
-    dir = "Models/ViT-L_16,cifar10,run0_15K_checkpoint.bin"
-    dict = torch.load(dir)
-    model.load_state_dict(dict)
-    model.eval()
+    #model = VisionTransformer(config, imgSize, zero_head=True, num_classes=numClasses)
+    #dir = "Models/ViT-L_16,cifar10,run0_15K_checkpoint.bin"
+    #dict = torch.load(dir)
+    #model.load_state_dict(dict)
+    #model.eval()
+    model = metaCNN
+
     #Wrap the model in the ModelPlus class
     modelPlus = ModelPlus("ViT-L_16", model, device, imgSizeH=imgSize, imgSizeW=imgSize, batchSize=batchSize)
     return valLoader, modelPlus

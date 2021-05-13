@@ -5,13 +5,13 @@
     <ProjectGuid>493ac638-40ea-4422-a73c-6815c11415ba</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>VisionTransformersRobustness.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>..\..\..\AdversarialDetection</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>VisionTransformersRobustness</Name>
     <RootNamespace>VisionTransformersRobustness</RootNamespace>
-    <InterpreterId>CondaEnv|CondaEnv|ML2020</InterpreterId>
+    <InterpreterId>MSBuild|Python3-7Cuda10-2|$(MSBuildProjectFullPath)</InterpreterId>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,6 +74,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="..\..\..\Python3-7Cuda10-2\">
+      <Id>Python3-7Cuda10-2</Id>
+      <Version>3.7</Version>
+      <Description>Python3-7Cuda10-2 (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -219,7 +219,7 @@ def GetCIFAR10Validation(imgSize = 32, batchSize=128):
         transforms.Resize((imgSize, imgSize)),
         transforms.ToTensor()
     ])
-    valLoader = torch.utils.data.DataLoader(datasets.CIFAR10(root='./data', train=False, download=True, transform=transformTest), batch_size=batchSize, shuffle=False, num_workers=1, pin_memory=True)
+    valLoader = torch.utils.data.DataLoader(datasets.CIFAR10(root='E:\Projects\Dataset\cifar10', train=False, download=True, transform=transformTest), batch_size=batchSize, shuffle=False, num_workers=1, pin_memory=True)
     return valLoader
 
 #This data is in the range 0 to 1
@@ -228,7 +228,7 @@ def GetCIFAR10Training(imgSize = 32, batchSize=128):
         transforms.Resize((imgSize, imgSize)),
         transforms.ToTensor()
     ])
-    trainLoader = torch.utils.data.DataLoader(datasets.CIFAR10(root='./data', train=True, download=True, transform=toTensorTransform), batch_size=batchSize, shuffle=False, num_workers=1, pin_memory=True)
+    trainLoader = torch.utils.data.DataLoader(datasets.CIFAR10(root='E:\Projects\Dataset\cifar10', train=True, download=True, transform=toTensorTransform), batch_size=batchSize, shuffle=False, num_workers=1, pin_memory=True)
     return trainLoader
 
 def GetCorrectlyIdentifiedSamplesBalanced(model, totalSamplesRequired, dataLoader, numClasses):
