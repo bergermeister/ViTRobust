@@ -112,7 +112,7 @@ def validateDA(valLoader, model, device=None):
 #Replicate TF's predict method behavior 
 def predictD(dataLoader, numClasses, model, device=None):
     numSamples = len(dataLoader.dataset)
-    yPred = torch.zeros(numSamples, numClasses)
+    yPred = torch.zeros(numSamples)
     #switch to evaluate mode
     model.eval()
     indexer = 0
@@ -217,7 +217,8 @@ def GetFirstCorrectlyIdentifiedExamples(device, dataLoader, model, numSamples):
 def GetCIFAR10Validation(imgSize = 32, batchSize=128):
     transformTest = transforms.Compose([
         transforms.Resize((imgSize, imgSize)),
-        transforms.ToTensor()
+        transforms.ToTensor(),
+        transforms.Normalize( ( 0.5, 0.5, 0.5 ), ( 0.5, 0.5, 0.5 ) )
     ])
     valLoader = torch.utils.data.DataLoader(datasets.CIFAR10(root='E:\Projects\Dataset\cifar10', train=False, download=True, transform=transformTest), batch_size=batchSize, shuffle=False, num_workers=1, pin_memory=True)
     return valLoader
@@ -282,7 +283,7 @@ def GetCorrectlyIdentifiedSamplesBalancedDefense(defense, totalSamplesRequired, 
     #yPred = model.predict(xData)
     yPred = defense.predictD(dataLoader, numClasses)
     for i in range(0, xData.shape[0]): #Go through every sample 
-        predictedClass = yPred[i].argmax(axis=0)
+        predictedClass = yPred[i]#.argmax(axis=0)
         trueClass = yData[i]#.argmax(axis=0) 
         currentSavedCount = int(sanityCounter[int(trueClass)]) #Check how may samples we previously saved from this class
         #If the network predicts the sample correctly and we haven't saved enough samples from this class yet then save it

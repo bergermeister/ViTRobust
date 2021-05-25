@@ -5,7 +5,7 @@
     <ProjectGuid>493ac638-40ea-4422-a73c-6815c11415ba</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>VisionTransformersRobustness.py</StartupFile>
-    <SearchPath>..\..\..\AdversarialDetection</SearchPath>
+    <SearchPath>..\..\..\AdversarialDetection;..\..\..\ResNet</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>VisionTransformersRobustness</Name>

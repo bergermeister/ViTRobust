@@ -1,4 +1,5 @@
 #In this file we provide different methods to run attacks on different models 
+import os
 import torch
 import numpy
 import ShuffleDefense
@@ -12,6 +13,7 @@ import BigTransferModels
 from collections import OrderedDict
 
 from Model.MetaCNN import MetaCNN
+from models import *
 
 #Load the ViT-L-16 and CIFAR-10 dataset 
 def LoadViTLAndCIFAR10():
@@ -27,8 +29,8 @@ def LoadViTLAndCIFAR10():
     #Basic variable and data setup
     device = torch.device("cuda")
     numClasses = 10
-    imgSize = 224
-    batchSize = 8
+    imgSize = 32
+    batchSize = 128
     #Load the CIFAR-10 data
     valLoader = DMP.GetCIFAR10Validation(imgSize, batchSize)
     #Load ViT-L-16
@@ -137,11 +139,11 @@ def AdaptiveAttackVisionTransformer():
     #Attack parameters 
     numAttackSamples = 1000
     epsForAttacks = 0.031
-    clipMin = 0.0 
+    clipMin = -1.0 
     clipMax = 1.0
     #Parameters of training the synthetic model 
-    imgSize = 224
-    batchSize = 32
+    imgSize = 32
+    batchSize = 128
     numClasses = 10
     numIterations = 4
     epochsPerIteration = 10
@@ -154,10 +156,11 @@ def AdaptiveAttackVisionTransformer():
     xTest, yTest = DMP.DataLoaderToTensor(valLoader)
     cleanLoader = DMP.GetCorrectlyIdentifiedSamplesBalancedDefense(defense, numAttackSamples, valLoader, numClasses)
     #Create the synthetic model 
-    syntheticDir = "Models//imagenet21k_ViT-B_32.npz"
+    syntheticDir = "E:\Projects\CPSC-597\AdversarialDetection\State\cifar10syntehtic.model"
     config = CONFIGS["ViT-B_32"]
-    syntheticModel = VisionTransformer(config, imgSize, zero_head=True, num_classes=numClasses)
-    syntheticModel.load_from(numpy.load(syntheticDir))  
+    syntheticModel = ResNet18() #VisionTransformer(config, imgSize, zero_head=True, num_classes=numClasses)
+    if( os.path.exists( syntheticDir ) ):
+        syntheticModel.load_from(numpy.load(syntheticDir))  
     syntheticModel.to(device)
     #Do the attack 
     oracle = defense

@@ -65,7 +65,7 @@ def TrainSyntheticModel(saveDir, device, oracle, syntheticModel, numIterations, 
     #First re-label the training data according to the oracle 
     trainDataLoader = LabelDataUsingOracle(oracle, dataLoader, numClasses)
     #Setup the training parameters 
-    criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.CrossEntropyLoss( ignore_index=10, size_average=True, reduce=True )
     #check what optimizer to use
     if optimizerName == "adam":
         optimizer = torch.optim.Adam(syntheticModel.parameters(), lr=learningRate)
