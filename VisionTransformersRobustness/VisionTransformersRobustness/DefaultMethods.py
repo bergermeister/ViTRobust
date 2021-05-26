@@ -160,7 +160,8 @@ def AdaptiveAttackVisionTransformer():
     config = CONFIGS["ViT-B_32"]
     syntheticModel = ResNet18() #VisionTransformer(config, imgSize, zero_head=True, num_classes=numClasses)
     if( os.path.exists( syntheticDir ) ):
-        syntheticModel.load_from(numpy.load(syntheticDir))  
+        data = torch.load( syntheticDir )
+        syntheticModel.load_state_dict( data )
     syntheticModel.to(device)
     #Do the attack 
     oracle = defense

@@ -24,7 +24,7 @@ def AdaptiveAttack(saveTag, device, oracle, syntheticModel, numIterations, epoch
     queryCounter = 0
     #First train the synthetic model 
     TrainSyntheticModel(saveDir, device, oracle, syntheticModel, numIterations, epochsPerIteration, epsForAug, learningRate, optimizerName, dataLoaderForTraining, numClasses, clipMin, clipMax)
-    torch.save(syntheticModel, saveDir+"//SyntheticModel")
+    torch.save(syntheticModel.state_dict(), saveDir+"//SyntheticModel")
     #Next run the attack 
     decayFactor = 1.0
     numSteps = 10 
@@ -55,10 +55,10 @@ def LabelDataUsingOracle(oracle, dataLoader, numClasses):
     #Convert to hard labels 
     yHardOracle = torch.zeros(numSamples)
     for i in range(0, numSamples):
-        yHardOracle[i] = int(yPredOracle[i].argmax(axis=0))
+        yHardOracle[i] = int(yPredOracle[i])
     #Put the tensors in a dataloader and return 
     xData, yWrong = DMP.DataLoaderToTensor(dataLoader) #Note we don't care about yWrong, just don't use it 
-    dataLoaderLabeled = DMP.TensorToDataLoader(xData, yHardOracle, transforms = None, batchSize = dataLoader.batch_size, randomizer = None)
+    dataLoaderLabeled = DMP.TensorToDataLoader(xData, yHardOracle, transforms = None, batchSize = dataLoader.batch_size, randomizer = True)
     return dataLoaderLabeled 
 
 def TrainSyntheticModel(saveDir, device, oracle, syntheticModel, numIterations, epochsPerIteration, epsForAug, learningRate, optimizerName, dataLoader, numClasses, clipMin, clipMax):

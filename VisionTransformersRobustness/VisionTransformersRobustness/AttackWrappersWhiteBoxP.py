@@ -28,7 +28,7 @@ def FGSMNativePytorch(device, dataLoader, model, epsilonMax, clipMin, clipMax, t
         # Forward pass the data through the model
         output = model(xDataTemp)
         # Calculate the loss
-        loss = torch.nn.CrossEntropyLoss()
+        loss = torch.nn.CrossEntropyLoss(ignore_index=10, size_average=True, reduce=True)
         # Zero all existing gradients
         model.zero_grad()
         # Calculate gradients of model in backward pass
