@@ -16,14 +16,14 @@ class ModelPlus():
         self.device = device
 
     #Validate a dataset, makes sure that the dataset is the right size before processing
-    def validateD(self, dataLoader):
+    def validateD(self, dataLoader, adversarial=False):
         #Put the images in the right size if they are not already
         dataLoaderFinal = self.formatDataLoader(dataLoader)
         #Make a copy of the model and put it on the GPU
         currentModel = self.model
         currentModel.to(self.device)
         #Get the accuracy
-        acc = DMP.validateD(dataLoaderFinal, currentModel)
+        acc = DMP.validateD(dataLoaderFinal, currentModel, None, adversarial)
         #Clean up the GPU memory
         del currentModel
         torch.cuda.empty_cache()

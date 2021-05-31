@@ -25,6 +25,9 @@ def LoadViTLAndCIFAR10():
             self.detect = "E:\Projects\CPSC-597\AdversarialDetection\State\cifar10detect.model"
     args = Arguments( )
     metaCNN = MetaCNN( 3, args )
+    # metaCNN = ResNet18()
+    # stateDict = torch.load( "E:\Projects\CPSC-597\AdversarialDetection\State\cifar10resnet.model" )
+    # metaCNN.load_state_dict( stateDict['model'] )
 
     #Basic variable and data setup
     device = torch.device("cuda")

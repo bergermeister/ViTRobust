@@ -21,7 +21,7 @@ class MyDataSet(torch.utils.data.Dataset):
         return len(self.x)
 
 #Validate using a dataloader 
-def validateD(valLoader, model, device=None):
+def validateD(valLoader, model, device=None, adversarial=False):
     #switch to evaluate mode
     model.eval()
     acc = 0 
@@ -43,6 +43,8 @@ def validateD(valLoader, model, device=None):
             for j in range(0, sampleSize):
                 if output[j].argmax(axis=0) == target[j]:
                     acc = acc +1
+                elif( ( adversarial == True ) and ( output[j].argmax(axis=0) == 10 ) ):
+                    acc = acc + 1
     acc = acc / float(len(valLoader.dataset))
     return acc
 
@@ -131,7 +133,7 @@ def predictD(dataLoader, numClasses, model, device=None):
             output = model(inputVar)
             output = output.float()
             for j in range(0, sampleSize):
-                yPred[indexer] = output[j]
+                yPred[indexer] = output[j].argmax(axis=0) # TODO: Remove argmax
                 indexer = indexer + 1 #update the indexer regardless 
     return yPred
 

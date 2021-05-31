@@ -33,7 +33,7 @@ def AdaptiveAttack(saveTag, device, oracle, syntheticModel, numIterations, epoch
     torch.save(advLoaderMIM, saveDir+"//AdvLoaderMIM")
     torch.cuda.empty_cache()
     cleanAcc = oracle.validateD(valLoader)
-    robustAccMIM = oracle.validateD(advLoaderMIM)
+    robustAccMIM = oracle.validateD(advLoaderMIM, True)
     print("Clean Acc:", cleanAcc)
     print("Robust Acc MIM:", robustAccMIM)
     print("Queries used:", queryCounter)
